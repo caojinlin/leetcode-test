@@ -6,7 +6,7 @@ package com.leetcode.demo.common;
  */
 public class HurrySort5 {
     public static void main(String[] args){
-        sortIntegers2(new int[]{5,4, 2, 3,1});
+        quickSort(new int[]{5,4, 2, 3,1});
     }
 
     public static void sortIntegers2(int[] arr) {
@@ -23,6 +23,51 @@ public class HurrySort5 {
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
+    }
+
+    public static void quickSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        quickSort2(arr, 0 ,arr.length);
+        //结果输出
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+    }
+
+    public static void quickSort2(int[] arr, int begin, int end) {
+        if (end - begin < 2) {
+            return;
+        }
+        int p = partition2(arr, begin, end);
+        quickSort2(arr, begin, p);
+        quickSort2(arr, p +1 , end);
+    }
+
+    public static int partition2(int[] arr, int start, int end) {
+        int v = arr[start];
+        end --;
+        while(start < end) {
+            while(start < end) {
+                if (arr[end] > v) {
+                    end --;
+                } else {
+                    arr[start ++] = arr[end];
+                    break;
+                }
+            }
+            while(start < end) {
+                if(arr[start] < v) {
+                    start ++;
+                } else {
+                    arr[end --] = arr[start];
+                    break;
+                }
+            }
+        }
+        arr[start] = v;
+        return start;
     }
 
     private static void hurrySort(int[] arr, int s, int e) {
