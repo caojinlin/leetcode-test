@@ -2,6 +2,9 @@ package com.leetcode.demo.common;
 
 import java.util.Stack;
 
+/**
+ * 使用两个栈实现队列
+ */
 public class Myqueue7 {
     private Stack<Integer> stack1 = new Stack<>();
 

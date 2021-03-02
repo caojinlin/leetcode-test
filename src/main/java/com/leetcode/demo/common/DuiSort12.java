@@ -1,7 +1,13 @@
 package com.leetcode.demo.common;
 
+/**
+ * 堆排序
+ */
 public class DuiSort12 {
-    //N代表数组的长度，i代表当做一个根节点然后开始进行堆话
+
+    /**
+     * N代表数组的长度，i代表当做一个根节点然后开始进行堆话
+     */
     public static void treeBinfy(int arr[] ,int N, int i){
 
         //递归的跳出函数

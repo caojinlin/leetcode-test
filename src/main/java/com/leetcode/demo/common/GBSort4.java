@@ -45,9 +45,9 @@ public class GBSort4 {
 
         int N = arr.length;
         //借助额外的N长度的空间
-        int[] newArr = new int[N];
+        int[] newArr = new int[N>>1];
 
-        sort(arr,0,N - 1,newArr);
+        sort(arr,0,N ,newArr);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
@@ -55,37 +55,43 @@ public class GBSort4 {
     }
 
 
+    /**
+     * start， end 左闭右开
+     * @param arr
+     * @param start
+     * @param end
+     * @param newArr
+     */
     private static void sort(int[] arr, int start, int end, int[] newArr) {
 
-        if (start >= end){
+        if (end - start < 2) {
             return;
         }
 
-        int mid = start + (end - start) / 2;
+        int mid = (end + start) >> 1;
         sort(arr,start,mid,newArr);
-        sort(arr,mid + 1,end,newArr);
+        sort(arr,mid ,end,newArr);
         merge(arr,start,end,newArr);
     }
 
     //归并方法
     private static void merge(int[] arr, int start, int end, int[] newArr) {
-        int leftIndex = start;
         int mid = start + (end - start) / 2;
-        int rightIndex = mid + 1;
 
-        for (int i = start; i <= end; i++){
-            newArr[i] = arr[i];
+        int li = 0;
+        int le = mid - start;
+        int ai = start;
+        int ri = mid;
+
+        for (int i = li; i < le; i++){
+            newArr[i] = arr[i + start];
         }
 
-        for (int j = start;j <= end; j++){
-            if (leftIndex > mid){
-                arr[j] = newArr[rightIndex++];
-            }else if (rightIndex > end){
-                arr[j] = newArr[leftIndex++];
-            }else if (newArr[leftIndex] < newArr[rightIndex]){
-                arr[j] = newArr[leftIndex++];
-            }else {
-                arr[j] = newArr[rightIndex++];
+        while (li < le) {
+            if (ri < end && newArr[li] > arr[ri]) {
+                arr[ai++] = arr[ri ++];
+            } else {
+                arr[ai++] = newArr[li++];
             }
         }
     }

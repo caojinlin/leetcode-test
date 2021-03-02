@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 二叉树的先序-中序-后续+树的深度
+ */
 public class TreeTrace13 {
     //存放前序+中序+后序排列的集合
     private static List<Node> list = new ArrayList<Node>();

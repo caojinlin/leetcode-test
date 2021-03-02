@@ -1,8 +1,13 @@
 package com.leetcode.demo.common;
 
+/**
+ * 单链表的排序
+ */
 public class LinkedSort10 {
 
-    //指针结构
+    /**
+     * 指针结构
+     */
     private static class Node {
         //链表节点的数据
         int data;

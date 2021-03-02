@@ -2,6 +2,9 @@ package com.leetcode.demo.common;
 
 import java.util.*;
 
+/**
+ * TopK算法
+ */
 public class Topk8 {
     //1.输入数组的元素是输入数组中出现频率大于k次的元素
     //2.输出数组需要按照元素出现频率的高低进行排序

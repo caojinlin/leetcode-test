@@ -1,8 +1,12 @@
 package com.leetcode.demo.common;
 
+
+/**
+ * 快速排序
+ */
 public class HurrySort5 {
     public static void main(String[] args){
-        sortIntegers2(new int[]{5,4,3,1});
+        sortIntegers2(new int[]{5,4, 2, 3,1});
     }
 
     public static void sortIntegers2(int[] arr) {

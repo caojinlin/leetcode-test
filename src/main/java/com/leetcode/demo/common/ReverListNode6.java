@@ -1,5 +1,8 @@
 package com.leetcode.demo.common;
 
+/**
+ * 翻转链表
+ */
 public class ReverListNode6 {
     /**
      * @param head: The head of linked list.

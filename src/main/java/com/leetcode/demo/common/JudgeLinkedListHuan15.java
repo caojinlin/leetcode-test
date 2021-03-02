@@ -2,6 +2,9 @@ package com.leetcode.demo.common;
 
 import java.util.LinkedList;
 
+/**
+ * 判断是否是循环链表
+ */
 public class JudgeLinkedListHuan15 {
     static LinkedList l = new LinkedList();
 

@@ -3,6 +3,9 @@ package com.leetcode.demo.common;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 递归和非递归方式实现斐波那契函数
+ */
 public class Febonacheer14 {
     //递归方式的时间复杂度是o（2^n） 空间复杂度是o（n）
     public static int fbnq(int num){

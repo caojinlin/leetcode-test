@@ -1,5 +1,8 @@
 package com.leetcode.demo.common;
 
+/**
+ * 给定有序数组中 给定元素出现次数 要求Logn
+ */
 public class ArrayTimes11 {
     public static int sortTimes(int[] arr,int tartget,boolean flag){
         //边界条件判断
