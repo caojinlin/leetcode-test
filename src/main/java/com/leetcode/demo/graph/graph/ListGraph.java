@@ -282,7 +282,7 @@ public class ListGraph<V, E> extends Graph<V, E> {
 
     @Override
     public Map<V, PathInfo<V, E>> shortestPath(V begin) {
-        return dijkstra(begin);
+        return bellmanFord(begin);
     }
 
     @SuppressWarnings("unused")
@@ -297,12 +297,19 @@ public class ListGraph<V, E> extends Graph<V, E> {
 
         int count = vertices.size() - 1;
         for (int i = 0; i < count; i++) { // v - 1 次
+            Boolean flag = false;
             for (Edge<V, E> edge : edges) {
                 PathInfo<V, E> fromPath = selectedPaths.get(edge.from.value);
                 if (fromPath == null) {
 					continue;
 				}
-                relax(edge, fromPath, selectedPaths);
+                // 如果不在发生变化，则最短路径已经生成
+                flag = relax(edge, fromPath, selectedPaths) || flag;
+            }
+            if (!flag) {
+                selectedPaths.remove(begin);
+                System.out.println("提前结束");
+                return selectedPaths;
             }
         }
 
