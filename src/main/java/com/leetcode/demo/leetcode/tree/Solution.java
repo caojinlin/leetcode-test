@@ -1,10 +1,16 @@
 package com.leetcode.demo.leetcode.tree;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
 public class Solution {
+
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        System.out.println(s.isValidSerialization1("#,#"));
+    }
 
     /**
      * 翻转二叉树
@@ -140,5 +146,72 @@ public class Solution {
         boolean a = pathSum(node.right, node.val + sum, target);
         boolean b= pathSum(node.left, node.val + sum, target);
         return a || b;
+    }
+
+    /**
+     * 给定一串以逗号分隔的序列，验证它是否是正确的二叉树的前序序列化
+     * @param preorder
+     * @return
+     */
+    public boolean isValidSerialization(String preorder) {
+        if (preorder == null || preorder.length() == 0) {
+            return false;
+        }
+        String[] split = preorder.split(",");
+        if ("#".equals(split[0])) {
+            if (split.length == 1 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        Stack<String> stack = new Stack<>();
+        stack.push(split[0]);
+        stack.push(split[0]);
+        for (int i = 1; i < split.length; i++) {
+            if (stack.isEmpty()) {
+                return false;
+            }
+            if (!"#".equals(split[i])) {
+                stack.pop();
+                stack.push(split[i]);
+                stack.push(split[i]);
+            } else {
+                stack.pop();
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public boolean isValidSerialization1(String preorder) {
+        int n = preorder.length();
+        int i = 0;
+        Deque<Integer> stack = new LinkedList<Integer>();
+        stack.push(1);
+        while (i < n) {
+            if (stack.isEmpty()) {
+                return false;
+            }
+            if (preorder.charAt(i) == ',') {
+                i++;
+            } else if (preorder.charAt(i) == '#'){
+                int top = stack.pop() - 1;
+                if (top > 0) {
+                    stack.push(top);
+                }
+                i++;
+            } else {
+                // 读一个数字
+                while (i < n && preorder.charAt(i) != ',') {
+                    i++;
+                }
+                int top = stack.pop() - 1;
+                if (top > 0) {
+                    stack.push(top);
+                }
+                stack.push(2);
+            }
+        }
+        return stack.isEmpty();
     }
 }
