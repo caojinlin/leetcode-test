@@ -113,6 +113,54 @@ public class Solution {
         }
     }
 
+    /**
+     * 给你单链表的头节点 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链
+     *     表节点，返回 反转后的链表 。
+     *
+     *
+     *      示例 1：
+     *
+     *
+     *     输入：head = [1,2,3,4,5], left = 2, right = 4
+     *     输出：[1,4,3,2,5]
+     * @param head
+     * @param left
+     * @param right
+     * @return
+     */
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode start = head;
+        ListNode pre = new ListNode(0, head);
+        boolean flag = false;
+        for (int i = 1; i < right; i ++) {
+            if (i == left-1) {
+                pre = start;
+                flag = true;
+            }
+            if (i<left) {
+                start = start.next;
+            } else {
+                ListNode tmp = start.next;
+                start.next = tmp.next;
+                tmp.next = pre.next;
+                pre.next = tmp;
+            }
+        }
+        if (!flag) {
+            return pre.next;
+        }
+        return head;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(3, new ListNode(5, new ListNode(6)));
+        Solution solution = new Solution();
+        System.out.println(solution.reverseBetween(head, 1, 3));
+    }
+
     public void swap(int[] nums, int left, int right) {
         int temp = nums[left];
         nums[left] = nums[right];
