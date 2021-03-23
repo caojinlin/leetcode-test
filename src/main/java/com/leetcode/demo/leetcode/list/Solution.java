@@ -155,10 +155,32 @@ public class Solution {
         return head;
     }
 
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        ListNode one = head;
+        ListNode two = head;
+        for (int i =0; i<n; i++) {
+            if (two == null) {
+                return head;
+            }
+            two = two.next;
+        }
+        while (two.next != null) {
+            one = one.next;
+            two = two.next;
+        }
+        ListNode tmp = one.next;
+        one.next = tmp.next;
+        tmp.next = null;
+        return head;
+    }
+
     public static void main(String[] args) {
         ListNode head = new ListNode(3, new ListNode(5, new ListNode(6)));
         Solution solution = new Solution();
-        System.out.println(solution.reverseBetween(head, 1, 3));
+        System.out.println(solution.removeNthFromEnd(head,  3));
     }
 
     public void swap(int[] nums, int left, int right) {
