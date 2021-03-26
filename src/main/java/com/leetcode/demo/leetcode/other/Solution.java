@@ -13,13 +13,11 @@ public class Solution {
      * @return
      */
     public int hammingWeight(int n) {
-        byte[] bytes = String.valueOf(n).getBytes();
-        int weight = 0;
-        for (byte b : bytes) {
-            if (b== 1) {
-                weight ++;
-            }
+        int ret = 0;
+        while (n != 0) {
+            n &= n - 1;
+            ret++;
         }
-        return weight;
+        return ret;
     }
 }
