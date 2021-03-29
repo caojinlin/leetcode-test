@@ -1,7 +1,9 @@
 package com.leetcode.demo.leetcode.list;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Solution {
 
@@ -187,5 +189,20 @@ public class Solution {
         int temp = nums[left];
         nums[left] = nums[right];
         nums[right] = temp;
+    }
+
+    public int[] twoSum(int[] numbers, int target) {
+        Map<Integer, Integer> temp = new HashMap<>();
+        int[] result = new int[2];
+        for (int i = 0; i < numbers.length; i++) {
+            if (temp.containsKey(target - numbers[i])) {
+                result[0] = temp.get(target - numbers[i]);
+                result[1] = i +1;
+                return result;
+            } else {
+                temp.put(numbers[i], i+1);
+            }
+        }
+        return result;
     }
 }
