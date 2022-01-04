@@ -22,7 +22,7 @@ public class ReverListNode6 {
         ListNode pre = null;
         ListNode next = null;
 
-        while (cur != null){
+        while (cur != null) {
             next = cur.next;
             cur.next = pre;
             pre = cur;
@@ -31,7 +31,7 @@ public class ReverListNode6 {
         return pre;
     }
 
-    public static class ListNode{
+    public static class ListNode {
 
         private int val;
 
@@ -41,7 +41,7 @@ public class ReverListNode6 {
             this.val = val;
         }
 
-        public ListNode(int val, ListNode next){
+        public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
         }
@@ -66,7 +66,7 @@ public class ReverListNode6 {
         public String toString() {
             return "ListNode{" +
                     "next=" + next +
-                    "val=" +val +
+                    "val=" + val +
                     '}';
         }
     }
@@ -82,7 +82,7 @@ public class ReverListNode6 {
         ListNode reverse = reverse(l1);
         System.out.println(reverse);
 
-        while (reverse.getNext() != null){
+        while (reverse.getNext() != null) {
             System.out.println(reverse.getVal());
             reverse = reverse.next;
         }

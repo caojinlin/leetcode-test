@@ -20,8 +20,8 @@ public class Solution {
         }
         String in = sb.toString().toUpperCase();
         byte[] bytes = in.getBytes();
-        for (int i = 0; i < bytes.length/2; i++) {
-            if (bytes[i] != bytes[bytes.length - i -1]) {
+        for (int i = 0; i < bytes.length / 2; i++) {
+            if (bytes[i] != bytes[bytes.length - i - 1]) {
                 return false;
             }
         }

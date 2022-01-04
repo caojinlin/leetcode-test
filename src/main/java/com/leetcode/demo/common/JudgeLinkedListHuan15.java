@@ -8,8 +8,7 @@ import java.util.LinkedList;
 public class JudgeLinkedListHuan15 {
     static LinkedList l = new LinkedList();
 
-
-    public static class ListNode{
+    public static class ListNode {
 
         private int val;
 
@@ -19,7 +18,7 @@ public class JudgeLinkedListHuan15 {
             this.val = val;
         }
 
-        public ListNode(int val, ListNode next){
+        public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
         }
@@ -44,27 +43,26 @@ public class JudgeLinkedListHuan15 {
         public String toString() {
             return "ListNode{" +
                     "next=" + next +
-                    "val=" +val +
+                    "val=" + val +
                     '}';
         }
     }
 
-    public static Boolean judge(ListNode node){
+    public static Boolean judge(ListNode node) {
 
-        if (node == null || node.next == null){
+        if (node == null || node.next == null) {
             return false;
         }
-
 
         ListNode slow = node;
         ListNode fast = node;
 
-        while (fast != null && fast.next != null){
+        while (fast != null && fast.next != null) {
 
             slow = slow.next;
             fast = fast.next.next;
 
-            if (slow == fast){
+            if (slow == fast) {
                 return true;
             }
 
@@ -79,7 +77,6 @@ public class JudgeLinkedListHuan15 {
         ListNode l2 = new ListNode(2);
         ListNode l3 = new ListNode(3);
         ListNode l4 = new ListNode(4);
-
 
         l1.setNext(l2);
         l2.setNext(l3);

@@ -13,14 +13,14 @@ public class InsertSort2 {
 
     public static void sortIntegers(int[] arr) {
 
-        if (arr == null || arr.length <= 1 ){
+        if (arr == null || arr.length <= 1) {
             return;
         }
 
         for (int i = 1; i < arr.length; i++) {
 
             for (int j = i; j > 0; j--) {
-                if (arr[j - 1] > arr[j]){
+                if (arr[j - 1] > arr[j]) {
                     int temp = arr[j - 1];
                     arr[j - 1] = arr[j];
                     arr[j] = temp;
@@ -29,8 +29,8 @@ public class InsertSort2 {
         }
     }
 
-    public static void main(String[] args){
-        int arr[] = new int[]{8,9,5,12,3,1};
+    public static void main(String[] args) {
+        int arr[] = new int[] {8, 9, 5, 12, 3, 1};
         sortIntegers(arr);
 
         for (int i = 0; i < arr.length; i++) {

@@ -16,14 +16,14 @@ public class Myqueue7 {
     }
 
     public Integer pop() {
-        if (stack1.isEmpty() && stack2.isEmpty()){
+        if (stack1.isEmpty() && stack2.isEmpty()) {
             throw new RuntimeException();
         }
 
-        if (!stack2.isEmpty()){
+        if (!stack2.isEmpty()) {
             return stack2.pop();
-        }else {
-            while (stack1.size() != 1){
+        } else {
+            while (stack1.size() != 1) {
                 stack2.push(stack1.pop());
             }
             return stack1.pop();
@@ -33,7 +33,11 @@ public class Myqueue7 {
 
     public static void main(String[] args) {
         Myqueue7 q = new Myqueue7();
-        q.push(1);q.push(2);q.push(3);q.push(4);q.push(5);
+        q.push(1);
+        q.push(2);
+        q.push(3);
+        q.push(4);
+        q.push(5);
 
         Integer pop1 = q.pop();
         System.out.println(pop1);

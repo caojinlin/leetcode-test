@@ -34,29 +34,29 @@ public class GBSort4 {
     }*/
 
     public static void main(String[] args) {
-        GBSort(new int[]{4, 3, 2, 1});
+        GBSort(new int[] {4, 3, 2, 1});
     }
 
     public static void GBSort(int[] arr) {
         //边界值判断
-        if (arr == null || arr.length <= 1){
+        if (arr == null || arr.length <= 1) {
             return;
         }
 
         int N = arr.length;
         //借助额外的N长度的空间
-        int[] newArr = new int[N>>1];
+        int[] newArr = new int[N >> 1];
 
-        sort(arr,0,N ,newArr);
+        sort(arr, 0, N, newArr);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
     }
 
-
     /**
      * start， end 左闭右开
+     *
      * @param arr
      * @param start
      * @param end
@@ -69,9 +69,9 @@ public class GBSort4 {
         }
 
         int mid = (end + start) >> 1;
-        sort(arr,start,mid,newArr);
-        sort(arr,mid ,end,newArr);
-        merge(arr,start,end,newArr);
+        sort(arr, start, mid, newArr);
+        sort(arr, mid, end, newArr);
+        merge(arr, start, end, newArr);
     }
 
     //归并方法
@@ -83,13 +83,13 @@ public class GBSort4 {
         int ai = start;
         int ri = mid;
 
-        for (int i = li; i < le; i++){
+        for (int i = li; i < le; i++) {
             newArr[i] = arr[i + start];
         }
 
         while (li < le) {
             if (ri < end && newArr[li] > arr[ri]) {
-                arr[ai++] = arr[ri ++];
+                arr[ai++] = arr[ri++];
             } else {
                 arr[ai++] = newArr[li++];
             }

@@ -6,13 +6,11 @@ import java.util.List;
 
 public class Solution {
 
-
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] nums = new int[]{-2,0,1,1,2};
+        int[] nums = new int[] {-2, 0, 1, 1, 2};
         System.out.println(s.threeSum(nums));
     }
-
 
     /**
      * 输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
@@ -88,12 +86,12 @@ public class Solution {
                 break;
             }
             for (int i = hindex + 1; i < high - 1; i++) {
-                result.add(matrix[i][weight -1]);
+                result.add(matrix[i][weight - 1]);
             }
             for (int i = weight - 1; i >= windex; i--) {
-                result.add(matrix[high -1][i]);
+                result.add(matrix[high - 1][i]);
             }
-            if (weight - windex  == 1) {
+            if (weight - windex == 1) {
                 break;
             }
             for (int i = high - 2; i >= hindex + 1; i--) {
@@ -110,6 +108,7 @@ public class Solution {
     /**
      * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重
      * 复的三元组。
+     *
      * @param nums
      * @return
      */
@@ -124,27 +123,27 @@ public class Solution {
             if (nums[i] > 0) {
                 break;
             }
-            if (i != 0 && nums[i] == nums[i -1]) {
+            if (i != 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
-            int L = i +1;
-            int R = length -1;
+            int L = i + 1;
+            int R = length - 1;
             while (R > L) {
                 int sum = nums[i] + nums[L] + nums[R];
                 if (sum == 0) {
                     result.add(Arrays.asList(nums[i], nums[L], nums[R]));
-                    while (L<R && nums[L] == nums[L +1]) {
-                        L ++;
+                    while (L < R && nums[L] == nums[L + 1]) {
+                        L++;
                     }
-                    while (R > L &&nums[R] == nums[R-1]) {
-                        R --;
+                    while (R > L && nums[R] == nums[R - 1]) {
+                        R--;
                     }
-                    L ++;
-                    R --;
-                } else if (sum>0) {
-                    R --;
+                    L++;
+                    R--;
+                } else if (sum > 0) {
+                    R--;
                 } else {
-                    L ++;
+                    L++;
                 }
             }
         }

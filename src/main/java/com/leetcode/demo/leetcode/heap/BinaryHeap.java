@@ -4,19 +4,18 @@ import com.leetcode.demo.leetcode.heap.AbstractHeap;
 
 import java.util.Comparator;
 
-
 /**
  * 二叉堆（最大堆）
- * @author MJ Lee
  *
  * @param <E>
+ * @author MJ Lee
  */
 @SuppressWarnings("unchecked")
 public class BinaryHeap<E> extends AbstractHeap<E> {
-    private E[] elements;
+    private              E[] elements;
     private static final int DEFAULT_CAPACITY = 10;
 
-    public BinaryHeap(E[] elements, Comparator<E> comparator)  {
+    public BinaryHeap(E[] elements, Comparator<E> comparator) {
         super(comparator);
 
         if (elements == null || elements.length == 0) {
@@ -32,7 +31,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
         }
     }
 
-    public BinaryHeap(E[] elements)  {
+    public BinaryHeap(E[] elements) {
         this(elements, null);
     }
 
@@ -100,9 +99,9 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
      */
     private void heapify() {
         // 自上而下的上滤
-//		for (int i = 1; i < size; i++) {
-//			siftUp(i);
-//		}
+        //		for (int i = 1; i < size; i++) {
+        //			siftUp(i);
+        //		}
 
         // 自下而上的下滤
         for (int i = (size >> 1) - 1; i >= 0; i--) {
@@ -112,6 +111,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
 
     /**
      * 让index位置的元素下滤
+     *
      * @param index
      */
     private void siftDown(int index) {
@@ -137,7 +137,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
                 child = elements[childIndex = rightIndex];
             }
 
-            if (compare(element, child) >= 0) break;
+            if (compare(element, child) >= 0) { break; }
 
             // 将子节点存放到index位置
             elements[index] = child;
@@ -149,6 +149,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
 
     /**
      * 让index位置的元素上滤
+     *
      * @param index
      */
     private void siftUp(int index) {
@@ -157,7 +158,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
         while (index > 0) {
             int parentIndex = (index - 1) >> 1;
             E parent = elements[parentIndex];
-            if (compare(element, parent) <= 0) break;
+            if (compare(element, parent) <= 0) { break; }
 
             // 将父元素存储在index位置
             elements[index] = parent;
@@ -170,7 +171,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
 
     private void ensureCapacity(int capacity) {
         int oldCapacity = elements.length;
-        if (oldCapacity >= capacity) return;
+        if (oldCapacity >= capacity) { return; }
 
         // 新容量为旧容量的1.5倍
         int newCapacity = oldCapacity + (oldCapacity >> 1);

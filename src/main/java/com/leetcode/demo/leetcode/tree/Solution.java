@@ -66,6 +66,7 @@ public class Solution {
 
     /**
      * 给定一个二叉树，判断它是否是高度平衡的二叉树。
+     *
      * @param root
      * @return
      */
@@ -77,7 +78,7 @@ public class Solution {
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            if (Math.abs(high(node.right) - high(node.left)) >1) {
+            if (Math.abs(high(node.right) - high(node.left)) > 1) {
                 return false;
             }
             if (node.right != null) {
@@ -99,6 +100,7 @@ public class Solution {
 
     /**
      * 给定一个二叉树，找出其最小深度。
+     *
      * @param root
      * @return
      */
@@ -119,12 +121,13 @@ public class Solution {
         if (node.right == null) {
             return minHigh(node.left);
         }
-        return Math.min(minHigh(node.left), minHigh(node.right)) +1;
+        return Math.min(minHigh(node.left), minHigh(node.right)) + 1;
     }
 
     /**
      * 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum ，
      * 判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和
+     *
      * @param root
      * @param targetSum
      * @return
@@ -144,12 +147,13 @@ public class Solution {
             return sum + node.val == target;
         }
         boolean a = pathSum(node.right, node.val + sum, target);
-        boolean b= pathSum(node.left, node.val + sum, target);
+        boolean b = pathSum(node.left, node.val + sum, target);
         return a || b;
     }
 
     /**
      * 给定一串以逗号分隔的序列，验证它是否是正确的二叉树的前序序列化
+     *
      * @param preorder
      * @return
      */
@@ -159,7 +163,7 @@ public class Solution {
         }
         String[] split = preorder.split(",");
         if ("#".equals(split[0])) {
-            if (split.length == 1 ) {
+            if (split.length == 1) {
                 return true;
             } else {
                 return false;
@@ -183,6 +187,17 @@ public class Solution {
         return stack.isEmpty();
     }
 
+    /**
+     * 二叉树的堂兄弟节点
+     * @param root
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean isCousins(TreeNode root, int x, int y) {
+        return false;
+    }
+
     public boolean isValidSerialization1(String preorder) {
         int n = preorder.length();
         int i = 0;
@@ -194,7 +209,7 @@ public class Solution {
             }
             if (preorder.charAt(i) == ',') {
                 i++;
-            } else if (preorder.charAt(i) == '#'){
+            } else if (preorder.charAt(i) == '#') {
                 int top = stack.pop() - 1;
                 if (top > 0) {
                     stack.push(top);

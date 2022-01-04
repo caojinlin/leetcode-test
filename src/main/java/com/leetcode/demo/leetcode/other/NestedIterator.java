@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Stack;
 
 public class NestedIterator implements Iterator<Integer> {
-    
+
     private List<NestedInteger> list;
-    
+
     private int index = 0;
 
     private int pindex = 0;

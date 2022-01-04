@@ -1,7 +1,7 @@
 package com.leetcode.demo.leetcode.tree;
 
 public class TreeNode {
-    int val;
+    int      val;
     TreeNode left;
     TreeNode right;
 
@@ -19,7 +19,7 @@ public class TreeNode {
     }
 
     public String toString(TreeNode root) {
-        StringBuilder sb= new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         toString(sb, root, "");
         return sb.toString();
     }

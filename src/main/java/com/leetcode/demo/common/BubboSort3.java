@@ -5,9 +5,9 @@ package com.leetcode.demo.common;
  */
 public class BubboSort3 {
 
-    private static void bubboSort(int[] arr){
+    private static void bubboSort(int[] arr) {
         //边界值判断
-        if (arr == null || arr.length <= 1){
+        if (arr == null || arr.length <= 1) {
             return;
         }
 
@@ -21,7 +21,7 @@ public class BubboSort3 {
             flag = false;
 
             for (int j = 0; j < arr.length - i - 1; j++) {
-                if (arr[j] > arr[j + 1]){
+                if (arr[j] > arr[j + 1]) {
                     int temp = arr[j + 1];
                     arr[j + 1] = arr[j];
                     arr[j] = temp;
@@ -35,8 +35,8 @@ public class BubboSort3 {
         }
     }
 
-    public static void main(String[] args){
-        int[] arr = new int[]{3,2,1};
+    public static void main(String[] args) {
+        int[] arr = new int[] {3, 2, 1};
         bubboSort(arr);
     }
 }

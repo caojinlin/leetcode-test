@@ -8,33 +8,33 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Febonacheer14 {
     //递归方式的时间复杂度是o（2^n） 空间复杂度是o（n）
-    public static int fbnq(int num){
+    public static int fbnq(int num) {
         //边界值条件判断
-        if (num <= 0 ){
+        if (num <= 0) {
             throw new RuntimeException();
         }
 
-        if (num == 1 || num == 2){
+        if (num == 1 || num == 2) {
             return 1;
-        }else {
+        } else {
             return fbnq(num - 1) + fbnq(num - 2);
         }
     }
 
     //非递归方式
-    public static int FDGfbnq(int num){
+    public static int FDGfbnq(int num) {
         //边界值条件判断
-        if (num <= 0 ){
+        if (num <= 0) {
             throw new RuntimeException();
         }
-        if (num == 1 || num == 2){
+        if (num == 1 || num == 2) {
             return 1;
         }
         int pre = 1;
         int ppre = 0;
         int ret = 0;
 
-        for(int i = 2;i <= num;i++){
+        for (int i = 2; i <= num; i++) {
             ret = ppre + pre;
             ppre = pre;
             pre = ret;
@@ -43,12 +43,12 @@ public class Febonacheer14 {
     }
 
     //尾递归方式
-    public static int WDGfbnq(int num,int ppre,int pre){
+    public static int WDGfbnq(int num, int ppre, int pre) {
         //边界值条件判断
-        if (num <= 0 ){
+        if (num <= 0) {
             throw new RuntimeException();
         }
-        if (num < 2){
+        if (num < 2) {
             return ppre;
         }
         int i = WDGfbnq(num - 1, pre, pre + ppre);

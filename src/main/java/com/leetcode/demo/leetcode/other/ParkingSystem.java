@@ -42,7 +42,6 @@ package com.leetcode.demo.leetcode.other;
 // Related Topics 设计
 // 👍 44 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
 class ParkingSystem {
     private int[] park = new int[3];
@@ -57,9 +56,9 @@ class ParkingSystem {
         if (carType < 1 || carType > 3) {
             return false;
         }
-        int count = park[carType - 1] -1;
-        if (count >=0) {
-            park[carType-1] = count;
+        int count = park[carType - 1] - 1;
+        if (count >= 0) {
+            park[carType - 1] = count;
             return true;
         }
         return false;

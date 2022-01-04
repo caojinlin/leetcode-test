@@ -41,8 +41,9 @@ public class Solution {
 
     /**
      * 翻转链表
-     *  1 -> 2 -> 3 -> 4 -> 5 -> null
-     *  5 -> 4 -> 3 -> 2 -> 1 -> null
+     * 1 -> 2 -> 3 -> 4 -> 5 -> null
+     * 5 -> 4 -> 3 -> 2 -> 1 -> null
+     *
      * @param head
      * @return
      */
@@ -54,26 +55,27 @@ public class Solution {
             pre = head;
             head = next;
         }
-        return  pre;
+        return pre;
     }
 
     /**
-     *  输入: 1->2
-     *  输出: false
+     * 输入: 1->2
+     * 输出: false
      *
-     *  示例 2:
-     *  输入: 1->2->2->1
-     *  输出: true
+     * 示例 2:
+     * 输入: 1->2->2->1
+     * 输出: true
+     *
      * @param head
      * @return
      */
     public boolean isPalindrome(ListNode head) {
-        List<Integer> result= new ArrayList<>();
-        while(head != null) {
+        List<Integer> result = new ArrayList<>();
+        while (head != null) {
             result.add(head.val);
             head = head.next;
         }
-        int end = result.size() -1 ;
+        int end = result.size() - 1;
         int start = 0;
         while (start < end) {
             if (result.get(start++).equals(result.get(end--))) {
@@ -85,21 +87,22 @@ public class Solution {
 
     /**
      * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+     *
      * @param nums
      */
     public void moveZeroes(int[] nums) {
         int a = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (i + a == nums.length -1) {
+            if (i + a == nums.length - 1) {
                 break;
             }
             if (nums[i] == 0) {
-                for (int j = i+1; j < nums.length; j++) {
+                for (int j = i + 1; j < nums.length; j++) {
                     int tmp = nums[j];
-                    nums[j] = nums[j -1];
-                    nums[j -1] = tmp;
+                    nums[j] = nums[j - 1];
+                    nums[j - 1] = tmp;
                 }
-                a ++;
+                a++;
             }
         }
     }
@@ -117,32 +120,33 @@ public class Solution {
 
     /**
      * 给你单链表的头节点 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链
-     *     表节点，返回 反转后的链表 。
+     * 表节点，返回 反转后的链表 。
      *
      *
-     *      示例 1：
+     * 示例 1：
      *
      *
-     *     输入：head = [1,2,3,4,5], left = 2, right = 4
-     *     输出：[1,4,3,2,5]
+     * 输入：head = [1,2,3,4,5], left = 2, right = 4
+     * 输出：[1,4,3,2,5]
+     *
      * @param head
      * @param left
      * @param right
      * @return
      */
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if (head == null || head.next == null){
+        if (head == null || head.next == null) {
             return head;
         }
         ListNode start = head;
         ListNode pre = new ListNode(0, head);
         boolean flag = false;
-        for (int i = 1; i < right; i ++) {
-            if (i == left-1) {
+        for (int i = 1; i < right; i++) {
+            if (i == left - 1) {
                 pre = start;
                 flag = true;
             }
-            if (i<left) {
+            if (i < left) {
                 start = start.next;
             } else {
                 ListNode tmp = start.next;
@@ -163,7 +167,7 @@ public class Solution {
         }
         ListNode one = head;
         ListNode two = head;
-        for (int i =0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             if (two == null) {
                 return head;
             }
@@ -182,7 +186,7 @@ public class Solution {
     public static void main(String[] args) {
         ListNode head = new ListNode(3, new ListNode(5, new ListNode(6)));
         Solution solution = new Solution();
-        System.out.println(solution.removeNthFromEnd(head,  3));
+        System.out.println(solution.removeNthFromEnd(head, 3));
     }
 
     public void swap(int[] nums, int left, int right) {
@@ -197,10 +201,10 @@ public class Solution {
         for (int i = 0; i < numbers.length; i++) {
             if (temp.containsKey(target - numbers[i])) {
                 result[0] = temp.get(target - numbers[i]);
-                result[1] = i +1;
+                result[1] = i + 1;
                 return result;
             } else {
-                temp.put(numbers[i], i+1);
+                temp.put(numbers[i], i + 1);
             }
         }
         return result;

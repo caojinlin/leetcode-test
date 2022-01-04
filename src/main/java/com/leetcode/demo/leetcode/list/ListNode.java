@@ -1,7 +1,7 @@
 package com.leetcode.demo.leetcode.list;
 
 public class ListNode {
-    public int val;
+    public int      val;
     public ListNode next;
 
     public ListNode() {

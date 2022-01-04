@@ -12,14 +12,14 @@ public class ChooseSort1 {
     public static void sortIntegers(int[] arr) {
 
         //边界值判断
-        if (arr == null || arr.length <= 0){
+        if (arr == null || arr.length <= 0) {
             return;
         }
 
         for (int i = 0; i < arr.length; i++) {
 
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[i]){
+                if (arr[j] < arr[i]) {
                     int temp = arr[j];
                     arr[j] = arr[i];
                     arr[i] = temp;
@@ -27,13 +27,14 @@ public class ChooseSort1 {
 
             }
         }
-        for (int q = 0; q <arr.length ;q++){
+        for (int q = 0; q < arr.length; q++) {
             System.out.println(arr[q]);
         }
 
     }
-    public static void main(String[] args){
-        int arr[] = new int[]{9,8,6,3,4};
+
+    public static void main(String[] args) {
+        int arr[] = new int[] {9, 8, 6, 3, 4};
         sortIntegers(arr);
     }
 }

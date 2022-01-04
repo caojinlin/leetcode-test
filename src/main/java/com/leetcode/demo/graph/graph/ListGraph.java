@@ -8,8 +8,8 @@ import java.util.Map.Entry;
 
 @SuppressWarnings("unchecked")
 public class ListGraph<V, E> extends Graph<V, E> {
-    private final Map<V, Vertex<V, E>> vertices = new HashMap<>();
-    private final Set<Edge<V, E>> edges = new HashSet<>();
+    private final Map<V, Vertex<V, E>>   vertices       = new HashMap<>();
+    private final Set<Edge<V, E>>        edges          = new HashSet<>();
     private final Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> {
         return weightManager.compare(e1.weight, e2.weight);
     };
@@ -50,8 +50,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
     @Override
     public void addVertex(V v) {
         if (vertices.containsKey(v)) {
-			return;
-		}
+            return;
+        }
         vertices.put(v, new Vertex<>(v));
     }
 
@@ -89,13 +89,13 @@ public class ListGraph<V, E> extends Graph<V, E> {
     public void removeEdge(V from, V to) {
         Vertex<V, E> fromVertex = vertices.get(from);
         if (fromVertex == null) {
-			return;
-		}
+            return;
+        }
 
         Vertex<V, E> toVertex = vertices.get(to);
         if (toVertex == null) {
-			return;
-		}
+            return;
+        }
 
         Edge<V, E> edge = new Edge<>(fromVertex, toVertex);
         if (fromVertex.outEdges.remove(edge)) {
@@ -108,8 +108,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
     public void removeVertex(V v) {
         Vertex<V, E> vertex = vertices.remove(v);
         if (vertex == null) {
-			return;
-		}
+            return;
+        }
 
         for (Iterator<Edge<V, E>> iterator = vertex.outEdges.iterator(); iterator.hasNext(); ) {
             Edge<V, E> edge = iterator.next();
@@ -131,12 +131,12 @@ public class ListGraph<V, E> extends Graph<V, E> {
     @Override
     public void bfs(V begin, VertexVisitor<V> visitor) {
         if (visitor == null) {
-			return;
-		}
+            return;
+        }
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) {
-			return;
-		}
+            return;
+        }
 
         Set<Vertex<V, E>> visitedVertices = new HashSet<>();
         Queue<Vertex<V, E>> queue = new LinkedList<>();
@@ -146,13 +146,13 @@ public class ListGraph<V, E> extends Graph<V, E> {
         while (!queue.isEmpty()) {
             Vertex<V, E> vertex = queue.poll();
             if (visitor.visit(vertex.value)) {
-				return;
-			}
+                return;
+            }
 
             for (Edge<V, E> edge : vertex.outEdges) {
                 if (visitedVertices.contains(edge.to)) {
-					continue;
-				}
+                    continue;
+                }
                 queue.offer(edge.to);
                 visitedVertices.add(edge.to);
             }
@@ -162,12 +162,12 @@ public class ListGraph<V, E> extends Graph<V, E> {
     @Override
     public void dfs(V begin, VertexVisitor<V> visitor) {
         if (visitor == null) {
-			return;
-		}
+            return;
+        }
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) {
-			return;
-		}
+            return;
+        }
 
         Set<Vertex<V, E>> visitedVertices = new HashSet<>();
         Stack<Vertex<V, E>> stack = new Stack<>();
@@ -176,23 +176,23 @@ public class ListGraph<V, E> extends Graph<V, E> {
         stack.push(beginVertex);
         visitedVertices.add(beginVertex);
         if (visitor.visit(begin)) {
-			return;
-		}
+            return;
+        }
 
         while (!stack.isEmpty()) {
             Vertex<V, E> vertex = stack.pop();
 
             for (Edge<V, E> edge : vertex.outEdges) {
                 if (visitedVertices.contains(edge.to)) {
-					continue;
-				}
+                    continue;
+                }
 
                 stack.push(edge.from);
                 stack.push(edge.to);
                 visitedVertices.add(edge.to);
                 if (visitor.visit(edge.to.value)) {
-					return;
-				}
+                    return;
+                }
 
                 break;
             }
@@ -240,8 +240,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private Set<EdgeInfo<V, E>> prim() {
         Iterator<Vertex<V, E>> it = vertices.values().iterator();
         if (!it.hasNext()) {
-			return null;
-		}
+            return null;
+        }
         Vertex<V, E> vertex = it.next();
         Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
         Set<Vertex<V, E>> addedVertices = new HashSet<>();
@@ -250,7 +250,7 @@ public class ListGraph<V, E> extends Graph<V, E> {
         int verticesSize = vertices.size();
         while (!heap.isEmpty() && addedVertices.size() < verticesSize) {
             Edge<V, E> edge = heap.remove();
-            if (addedVertices.contains(edge.to)) continue;
+            if (addedVertices.contains(edge.to)) { continue; }
             edgeInfos.add(edge.info());
             addedVertices.add(edge.to);
             heap.addAll(edge.to.outEdges);
@@ -261,8 +261,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private Set<EdgeInfo<V, E>> kruskal() {
         int edgeSize = vertices.size() - 1;
         if (edgeSize == -1) {
-			return null;
-		}
+            return null;
+        }
         Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
         MinHeap<Edge<V, E>> heap = new MinHeap<>(edges, edgeComparator);
         UnionFind<Vertex<V, E>> uf = new UnionFind<>();
@@ -272,8 +272,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
         while (!heap.isEmpty() && edgeInfos.size() < edgeSize) {
             Edge<V, E> edge = heap.remove();
             if (uf.isSame(edge.from, edge.to)) {
-				continue;
-			}
+                continue;
+            }
             edgeInfos.add(edge.info());
             uf.union(edge.from, edge.to);
         }
@@ -289,8 +289,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private Map<V, PathInfo<V, E>> bellmanFord(V begin) {
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) {
-			return null;
-		}
+            return null;
+        }
 
         Map<V, PathInfo<V, E>> selectedPaths = new HashMap<>();
         selectedPaths.put(begin, new PathInfo<>(weightManager.zero()));
@@ -301,8 +301,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
             for (Edge<V, E> edge : edges) {
                 PathInfo<V, E> fromPath = selectedPaths.get(edge.from.value);
                 if (fromPath == null) {
-					continue;
-				}
+                    continue;
+                }
                 // 如果不在发生变化，则最短路径已经生成
                 flag = relax(edge, fromPath, selectedPaths) || flag;
             }
@@ -316,8 +316,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
         for (Edge<V, E> edge : edges) {
             PathInfo<V, E> fromPath = selectedPaths.get(edge.from.value);
             if (fromPath == null) {
-				continue;
-			}
+                continue;
+            }
             if (relax(edge, fromPath, selectedPaths)) {
                 System.out.println("有负权环");
                 return null;
@@ -328,40 +328,40 @@ public class ListGraph<V, E> extends Graph<V, E> {
         return selectedPaths;
     }
 
-//	public Map<V, E> shortestPath(V begin) {
-//		Vertex<V, E> beginVertex = vertices.get(begin);
-//		if (beginVertex == null) return null;
-//		
-//		Map<V, E> selectedPaths = new HashMap<>();
-//		Map<Vertex<V, E>, E> paths = new HashMap<>();
-//		// 初始化paths
-//		for (Edge<V, E> edge : beginVertex.outEdges) {
-//			paths.put(edge.to, edge.weight);
-//		}
-//
-//		while (!paths.isEmpty()) {
-//			Entry<Vertex<V, E>, E> minEntry = getMinPath(paths);
-//			// minVertex离开桌面
-//			Vertex<V, E> minVertex = minEntry.getKey();
-//			selectedPaths.put(minVertex.value, minEntry.getValue());
-//			paths.remove(minVertex);
-//			// 对它的minVertex的outEdges进行松弛操作
-//			for (Edge<V, E> edge : minVertex.outEdges) {
-//				// 如果edge.to已经离开桌面，就没必要进行松弛操作
-//				if (selectedPaths.containsKey(edge.to.value)) continue;
-//				// 新的可选择的最短路径：beginVertex到edge.from的最短路径 + edge.weight
-//				E newWeight = weightManager.add(minEntry.getValue(), edge.weight);
-//				// 以前的最短路径：beginVertex到edge.to的最短路径
-//				E oldWeight = paths.get(edge.to);
-//				if (oldWeight == null || weightManager.compare(newWeight, oldWeight) < 0) {
-//					paths.put(edge.to, newWeight);
-//				}
-//			}
-//		}
-//		
-//		selectedPaths.remove(begin);
-//		return selectedPaths;
-//	}
+    //	public Map<V, E> shortestPath(V begin) {
+    //		Vertex<V, E> beginVertex = vertices.get(begin);
+    //		if (beginVertex == null) return null;
+    //
+    //		Map<V, E> selectedPaths = new HashMap<>();
+    //		Map<Vertex<V, E>, E> paths = new HashMap<>();
+    //		// 初始化paths
+    //		for (Edge<V, E> edge : beginVertex.outEdges) {
+    //			paths.put(edge.to, edge.weight);
+    //		}
+    //
+    //		while (!paths.isEmpty()) {
+    //			Entry<Vertex<V, E>, E> minEntry = getMinPath(paths);
+    //			// minVertex离开桌面
+    //			Vertex<V, E> minVertex = minEntry.getKey();
+    //			selectedPaths.put(minVertex.value, minEntry.getValue());
+    //			paths.remove(minVertex);
+    //			// 对它的minVertex的outEdges进行松弛操作
+    //			for (Edge<V, E> edge : minVertex.outEdges) {
+    //				// 如果edge.to已经离开桌面，就没必要进行松弛操作
+    //				if (selectedPaths.containsKey(edge.to.value)) continue;
+    //				// 新的可选择的最短路径：beginVertex到edge.from的最短路径 + edge.weight
+    //				E newWeight = weightManager.add(minEntry.getValue(), edge.weight);
+    //				// 以前的最短路径：beginVertex到edge.to的最短路径
+    //				E oldWeight = paths.get(edge.to);
+    //				if (oldWeight == null || weightManager.compare(newWeight, oldWeight) < 0) {
+    //					paths.put(edge.to, newWeight);
+    //				}
+    //			}
+    //		}
+    //
+    //		selectedPaths.remove(begin);
+    //		return selectedPaths;
+    //	}
 
     /**
      * 松弛
@@ -376,8 +376,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
         // 以前的最短路径：beginVertex到edge.to的最短路径
         PathInfo<V, E> oldPath = paths.get(edge.to.value);
         if (oldPath != null && weightManager.compare(newWeight, oldPath.weight) >= 0) {
-			return false;
-		}
+            return false;
+        }
 
         if (oldPath == null) {
             oldPath = new PathInfo<>();
@@ -396,19 +396,19 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private Map<V, PathInfo<V, E>> dijkstra(V begin) {
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) {
-			return null;
-		}
+            return null;
+        }
 
         Map<V, PathInfo<V, E>> selectedPaths = new HashMap<>();
         Map<Vertex<V, E>, PathInfo<V, E>> paths = new HashMap<>();
         paths.put(beginVertex, new PathInfo<>(weightManager.zero()));
         // 初始化paths
-//		for (Edge<V, E> edge : beginVertex.outEdges) {
-//			PathInfo<V, E> path = new PathInfo<>();
-//			path.weight = edge.weight;
-//			path.edgeInfos.add(edge.info());
-//			paths.put(edge.to, path);
-//		}
+        //		for (Edge<V, E> edge : beginVertex.outEdges) {
+        //			PathInfo<V, E> path = new PathInfo<>();
+        //			path.weight = edge.weight;
+        //			path.edgeInfos.add(edge.info());
+        //			paths.put(edge.to, path);
+        //		}
 
         while (!paths.isEmpty()) {
             Entry<Vertex<V, E>, PathInfo<V, E>> minEntry = getMinPath(paths);
@@ -421,8 +421,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
             for (Edge<V, E> edge : minVertex.outEdges) {
                 // 如果edge.to已经离开桌面，就没必要进行松弛操作
                 if (selectedPaths.containsKey(edge.to.value)) {
-					continue;
-				}
+                    continue;
+                }
                 relaxForDijkstra(edge, minPath, paths);
             }
         }
@@ -444,8 +444,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
         // 以前的最短路径：beginVertex到edge.to的最短路径
         PathInfo<V, E> oldPath = paths.get(edge.to);
         if (oldPath != null && weightManager.compare(newWeight, oldPath.weight) >= 0) {
-			return;
-		}
+            return;
+        }
 
         if (oldPath == null) {
             oldPath = new PathInfo<>();
@@ -497,28 +497,28 @@ public class ListGraph<V, E> extends Graph<V, E> {
             vertices.forEach((V v1, Vertex<V, E> vertex1) -> {
                 vertices.forEach((V v3, Vertex<V, E> vertex3) -> {
                     if (v1.equals(v2) || v2.equals(v3) || v1.equals(v3)) {
-						return;
-					}
+                        return;
+                    }
 
                     // v1 -> v2
                     PathInfo<V, E> path12 = getPathInfo(v1, v2, paths);
                     if (path12 == null) {
-						return;
-					}
+                        return;
+                    }
 
                     // v2 -> v3
                     PathInfo<V, E> path23 = getPathInfo(v2, v3, paths);
                     if (path23 == null) {
-						return;
-					}
+                        return;
+                    }
 
                     // v1 -> v3
                     PathInfo<V, E> path13 = getPathInfo(v1, v3, paths);
 
                     E newWeight = weightManager.add(path12.weight, path23.weight);
                     if (path13 != null && weightManager.compare(newWeight, path13.weight) >= 0) {
-						return;
-					}
+                        return;
+                    }
 
                     if (path13 == null) {
                         path13 = new PathInfo<V, E>();
@@ -543,8 +543,8 @@ public class ListGraph<V, E> extends Graph<V, E> {
     }
 
     private static class Vertex<V, E> {
-        V value;
-        Set<Edge<V, E>> inEdges = new HashSet<>();
+        V               value;
+        Set<Edge<V, E>> inEdges  = new HashSet<>();
         Set<Edge<V, E>> outEdges = new HashSet<>();
 
         Vertex(V value) {
@@ -570,7 +570,7 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private static class Edge<V, E> {
         Vertex<V, E> from;
         Vertex<V, E> to;
-        E weight;
+        E            weight;
 
         Edge(Vertex<V, E> from, Vertex<V, E> to) {
             this.from = from;
@@ -598,70 +598,70 @@ public class ListGraph<V, E> extends Graph<V, E> {
         }
     }
 
-//	@Override
-//	public void bfs(V begin) {
-//		Vertex<V, E> beginVertex = vertices.get(begin);
-//		if (beginVertex == null) return;
-//		
-//		Set<Vertex<V, E>> visitedVertices = new HashSet<>();
-//		Queue<Vertex<V, E>> queue = new LinkedList<>();
-//		queue.offer(beginVertex);
-//		visitedVertices.add(beginVertex);
-//		
-//		while (!queue.isEmpty()) {
-//			Vertex<V, E> vertex = queue.poll();
-//			System.out.println(vertex.value);
-//			
-//			for (Edge<V, E> edge : vertex.outEdges) {
-//				if (visitedVertices.contains(edge.to)) continue;
-//				queue.offer(edge.to);
-//				visitedVertices.add(edge.to);
-//			}
-//		}
-//	}
-//
-//	@Override
-//	public void dfs(V begin) {
-//		Vertex<V, E> beginVertex = vertices.get(begin);
-//		if (beginVertex == null) return;
-//
-//		Set<Vertex<V, E>> visitedVertices = new HashSet<>();
-//		Stack<Vertex<V, E>> stack = new Stack<>();
-//		
-//		// 先访问起点
-//		stack.push(beginVertex);
-//		visitedVertices.add(beginVertex);
-//		System.out.println(beginVertex.value);
-//		
-//		while (!stack.isEmpty()) {
-//			Vertex<V, E> vertex = stack.pop();
-//			
-//			for (Edge<V, E> edge : vertex.outEdges) {
-//				if (visitedVertices.contains(edge.to)) continue;
-//				
-//				stack.push(edge.from);
-//				stack.push(edge.to);
-//				visitedVertices.add(edge.to);
-//				System.out.println(edge.to.value);
-//				
-//				break;
-//			}
-//		}
-//	}
+    //	@Override
+    //	public void bfs(V begin) {
+    //		Vertex<V, E> beginVertex = vertices.get(begin);
+    //		if (beginVertex == null) return;
+    //
+    //		Set<Vertex<V, E>> visitedVertices = new HashSet<>();
+    //		Queue<Vertex<V, E>> queue = new LinkedList<>();
+    //		queue.offer(beginVertex);
+    //		visitedVertices.add(beginVertex);
+    //
+    //		while (!queue.isEmpty()) {
+    //			Vertex<V, E> vertex = queue.poll();
+    //			System.out.println(vertex.value);
+    //
+    //			for (Edge<V, E> edge : vertex.outEdges) {
+    //				if (visitedVertices.contains(edge.to)) continue;
+    //				queue.offer(edge.to);
+    //				visitedVertices.add(edge.to);
+    //			}
+    //		}
+    //	}
+    //
+    //	@Override
+    //	public void dfs(V begin) {
+    //		Vertex<V, E> beginVertex = vertices.get(begin);
+    //		if (beginVertex == null) return;
+    //
+    //		Set<Vertex<V, E>> visitedVertices = new HashSet<>();
+    //		Stack<Vertex<V, E>> stack = new Stack<>();
+    //
+    //		// 先访问起点
+    //		stack.push(beginVertex);
+    //		visitedVertices.add(beginVertex);
+    //		System.out.println(beginVertex.value);
+    //
+    //		while (!stack.isEmpty()) {
+    //			Vertex<V, E> vertex = stack.pop();
+    //
+    //			for (Edge<V, E> edge : vertex.outEdges) {
+    //				if (visitedVertices.contains(edge.to)) continue;
+    //
+    //				stack.push(edge.from);
+    //				stack.push(edge.to);
+    //				visitedVertices.add(edge.to);
+    //				System.out.println(edge.to.value);
+    //
+    //				break;
+    //			}
+    //		}
+    //	}
 
-//	public void dfs2(V begin) {
-//		Vertex<V, E> beginVertex = vertices.get(begin);
-//		if (beginVertex == null) return;
-//		dfs2(beginVertex, new HashSet<>());
-//	}
-//	
-//	private void dfs2(Vertex<V, E> vertex, Set<Vertex<V, E>> visitedVertices) {
-//		System.out.println(vertex.value);
-//		visitedVertices.add(vertex);
-//
-//		for (Edge<V, E> edge : vertex.outEdges) {
-//			if (visitedVertices.contains(edge.to)) continue;
-//			dfs2(edge.to, visitedVertices);
-//		}
-//	}
+    //	public void dfs2(V begin) {
+    //		Vertex<V, E> beginVertex = vertices.get(begin);
+    //		if (beginVertex == null) return;
+    //		dfs2(beginVertex, new HashSet<>());
+    //	}
+    //
+    //	private void dfs2(Vertex<V, E> vertex, Set<Vertex<V, E>> visitedVertices) {
+    //		System.out.println(vertex.value);
+    //		visitedVertices.add(vertex);
+    //
+    //		for (Edge<V, E> edge : vertex.outEdges) {
+    //			if (visitedVertices.contains(edge.to)) continue;
+    //			dfs2(edge.to, visitedVertices);
+    //		}
+    //	}
 }
