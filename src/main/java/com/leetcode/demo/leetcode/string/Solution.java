@@ -1,17 +1,15 @@
 package com.leetcode.demo.leetcode.string;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.Random;
-import java.util.Stack;
 
 public class Solution {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.simplifyPath("/../"));
+        System.out.println(s.simplifyPath("/a//b////c/d//././/.."));
     }
 
     public boolean isPalindrome(String s) {
@@ -62,7 +60,7 @@ public class Solution {
     }
 
     public String simplifyPath(String path) {
-        Stack<String> lujin = new Stack<>();
+        Deque<String> lujin = new ArrayDeque<>();
         String[] split = path.split("/");
         for (int i = 0; i < split.length; i++) {
             if (Objects.equals(split[i], "")) {
@@ -71,16 +69,18 @@ public class Solution {
             if (split[i].equals(".")) {
                 continue;
             }
-            if (split[i].equals("..")) {
+            if ("..".equals(split[i])) {
                 if ( !lujin.isEmpty()) {
                     lujin.pop();
                 }
             } else {
-                lujin.add(split[i]);
+                lujin.push(split[i]);
             }
         }
         StringBuilder sb = new StringBuilder();
-        lujin.forEach(s -> sb.append("/").append(s));
+        while (!lujin.isEmpty()) {
+            sb.append("/").append(lujin.pollLast());
+        }
         return sb.toString().equals("") ? "/" : sb.toString();
     }
 }
