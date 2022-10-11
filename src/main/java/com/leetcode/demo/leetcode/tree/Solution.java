@@ -1,9 +1,14 @@
 package com.leetcode.demo.leetcode.tree;
 
+import com.google.common.collect.Lists;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -11,7 +16,9 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.isValidSerialization1("#,#"));
+        TreeNode root = new TreeNode(2, null, new TreeNode(3));
+        int bottomLeftValue = s.findBottomLeftValue(root);
+        System.out.println(bottomLeftValue);
     }
 
     /**
@@ -259,5 +266,46 @@ public class Solution {
             }
         }
         return res;
+    }
+
+    public MutilTreeNode copyTree(MutilTreeNode node) {
+        MutilTreeNode copy = new MutilTreeNode();
+        copy.setVal(node.getVal());
+        copyChild(node, copy);
+        return copy;
+    }
+
+    public void copyChild(MutilTreeNode parent, MutilTreeNode copyNode) {
+        if (CollectionUtils.isEmpty(parent.getChildren())) {
+            return;
+        }
+        for (MutilTreeNode node : parent.getChildren()) {
+            MutilTreeNode copy = new MutilTreeNode(node.val);
+            List<MutilTreeNode> children = Optional.ofNullable(copyNode.getChildren()).orElseGet(ArrayList::new);
+            copyNode.setChildren(children);
+            children.add(copy);
+            copyChild(node, copy);
+        }
+    }
+
+    public int findBottomLeftValue(TreeNode root) {
+        if (root == null) {return 0;}
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        int ans = 0;
+        while (!queue.isEmpty()) {
+            //当前层的所有结点
+            int curSize = queue.size();
+            for (int i = 0; i < curSize; i++) {
+                TreeNode curNode = queue.poll();
+                if (curNode.left != null) {queue.offer(curNode.left);}
+                if (curNode.right != null) {queue.offer(curNode.right);}
+                //第一个结点
+                if (i == 0) {
+                    ans = curNode.val;
+                }
+            }
+        }
+        return ans;
     }
 }

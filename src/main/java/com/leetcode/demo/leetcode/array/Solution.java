@@ -1,15 +1,20 @@
 package com.leetcode.demo.leetcode.array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] nums = new int[] {-2, 0, 1, 1, 2};
-        System.out.println(s.threeSum(nums));
+        //[2,7,11,15], nums2 = [1,10,4,11]
+        int[] nums1 = new int[]{0, 3, 5, 8, 9};
+        int[] nums2 = new int[]{2, 1, 4, 6, 9};
+        int ints = s.minSwap(nums1, nums2);
+        System.out.println(ints);
     }
 
     /**
@@ -148,5 +153,153 @@ public class Solution {
             }
         }
         return result;
+    }
+
+    public static int findPairs(int[] nums, int k) {
+        Map<Integer, Integer> charMap = new HashMap<>();
+        int result = 0;
+        Set<Integer> res = new HashSet<>();
+        for (int num : nums) {
+            if (charMap.containsKey(Math.abs(num - k)) && (!res.contains(num) && !res.contains(charMap.get(Math.abs(num - k))))) {
+                res.add(num);
+                res.add(charMap.get(Math.abs(num - k)));
+                result++;
+            }
+            if (charMap.containsKey(Math.abs(num + k)) && (!res.contains(num) && !res.contains(charMap.get(Math.abs(num + k))))) {
+                res.add(num);
+                res.add(charMap.get(Math.abs(num + k)));
+                result++;
+            }
+            charMap.put(Math.abs(num - k), num);
+            charMap.put(num + k, num);
+        }
+        return result;
+    }
+
+    /**
+     * 给定两个大小相等的数组 nums1 和 nums2，nums1 相对于 nums2 的优势可以用满足 nums1[i] > nums2[i] 的索引 i 的数目来描述。
+     * <p>
+     * 返回 nums1 的任意排列，使其相对于 nums2 的优势最大化。
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int[] advantageCount(int[] nums1, int[] nums2) {
+        List<Pair<Integer, Integer>> num1p = new ArrayList<>(nums1.length);
+        for (int i = 0; i < nums1.length; i++) {
+            num1p.add(new Pair<>(nums1[i], i));
+        }
+        num1p = num1p.stream().sorted((p1, p2) -> Integer.compare(p2.getKey(), p1.getKey())).collect(Collectors.toList());
+        List<Pair<Integer, Integer>> num2p = new ArrayList<>(nums1.length);
+        for (int i = 0; i < nums2.length; i++) {
+            num2p.add(new Pair<>(nums2[i], i));
+        }
+        num2p = num2p.stream().sorted((p1, p2) -> Integer.compare(p2.getKey(), p1.getKey())).collect(Collectors.toList());
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
+        int right = 0, left = num2p.size() - 1;
+        int num2length = 0;
+        while (num2length < nums2.length) {
+            Pair<Integer, Integer> num1 = num1p.get(right);
+            Pair<Integer, Integer> num2 = num2p.get(num2length);
+            if (num1.getKey() > num2.getKey()) {
+                result.add(new Pair<>(num1.getValue(), num2.getValue()));
+                right++;
+            } else {
+                Pair<Integer, Integer> numleft = num1p.get(left);
+                result.add(new Pair<>(numleft.getValue(), num2.getValue()));
+                left--;
+            }
+            num2length++;
+        }
+        result = result.stream().sorted(Comparator.comparingInt(Pair::getValue)).collect(Collectors.toList());
+        int[] res = new int[nums1.length];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = nums1[result.get(i).getKey()];
+        }
+        return res;
+    }
+
+    public int[] advantageCount2(int[] nums1, int[] nums2) {
+        Integer[] orderPos = new Integer[nums2.length];
+        for (int i = 0; i < nums2.length; i++) {
+            orderPos[i] = i;
+        }
+        Arrays.sort(orderPos, Comparator.comparingInt(i -> nums2[i]));
+        // 对nums2的“元素位置”进行排序
+        Arrays.sort(nums1);
+        int head = 0, tail = nums1.length - 1;
+        for (int i = orderPos.length - 1; i >= 0; i--) {
+            if (nums1[tail] > nums2[orderPos[i]]) {
+                nums2[orderPos[i]] = nums1[tail--];
+            } else {
+                nums2[orderPos[i]] = nums1[head++];
+            }
+            // 否则，将“当前最小值”赋值给它
+        }
+        return nums2;
+    }
+
+    class Pair<L, R> {
+
+        private L left;
+
+        public L getLeft() {
+            return left;
+        }
+
+        public void setLeft(L left) {
+            this.left = left;
+        }
+
+        public R getRight() {
+            return right;
+        }
+
+        public L getKey() {
+            return left;
+        }
+
+        public R getValue() {
+            return right;
+        }
+
+        public void setRight(R right) {
+            this.right = right;
+        }
+
+        private R right;
+
+        public Pair(L left, R right) {
+            this.left = left;
+            this.right = right;
+        }
+
+    }
+
+    public int minSwap(int[] nums1, int[] nums2) {
+        int[][] dp = new int[nums1.length][2];
+        dp[0][0] = 0;
+        dp[0][1] = 1;
+        for (int i = 1; i < nums1.length; i++) {
+            int a1 = nums1[i - 1], a2 = nums1[i], b1 = nums2[i - 1], b2 = nums2[i];
+            if ((a1 < a2 && b1 < b2) && (b1 < a2 && a1 < b2)) {
+                // 如果i【不互换】，则i-1可【互换】也可【不互换】
+                dp[i][0] = Math.min(dp[i - 1][0], dp[i - 1][1]);
+                // 如果i【互换】，则i-1可【互换】也可【不互换】
+                dp[i][1] = dp[i][0] + 1;
+            } else if (a1 < a2 && b1 < b2) {
+                // 如果i【不互换】，则i-1必须【不互换】
+                dp[i][0] = dp[i - 1][0];
+                // 如果i【互换】，则i-1必须【互换】
+                dp[i][1] = dp[i - 1][1] + 1;
+            } else {
+                // 如果i【不互换】，则i-1必须【互换】
+                dp[i][0] = dp[i - 1][1];
+                // 如果i【互换】，则i-1必须【不互换】
+                dp[i][1] = dp[i - 1][0] + 1;
+            }
+        }
+        return Math.min(dp[nums1.length - 1][0], dp[nums1.length - 1][1]);
     }
 }
