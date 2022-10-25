@@ -302,4 +302,32 @@ public class Solution {
         }
         return Math.min(dp[nums1.length - 1][0], dp[nums1.length - 1][1]);
     }
+
+    public int totalFruit(int[] fruits) {
+        int[] pickRecords = new int[fruits.length];
+        int result = 0, startIndex = 0, diffIndex = 0, pickNums = 0, curFruit = 0;
+        for (int i = 0; i < fruits.length; i++) {
+            if (pickRecords[fruits[i]] == 0) {
+                if (pickNums == 2) {
+                    result = Math.max(result, i - startIndex);
+                    pickRecords[fruits[diffIndex - 1]] = 0;
+                    // 将水果设置为“未被选择”
+                    startIndex = diffIndex;
+                    // 记录“窗口”的开始index
+                    pickNums--;
+                    // 已选择的水果种类-1
+                }
+                pickNums++;
+                // 已选择的水果种类+1
+                pickRecords[fruits[i]] = 1;
+                // 将水果设置为“被选择”
+            }
+            if (curFruit != fruits[i]) {
+                curFruit = fruits[i];
+                // 当前水果类型
+                diffIndex = i; // 记录水果类型变换时的index
+            }
+        }
+        return Math.max(result, fruits.length - startIndex);
+    }
 }

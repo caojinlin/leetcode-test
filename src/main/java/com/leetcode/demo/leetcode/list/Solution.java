@@ -184,9 +184,9 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        ListNode head = new ListNode(3, new ListNode(5, new ListNode(6)));
+        ListNode head = new ListNode(0, new ListNode(1, new ListNode(2, new ListNode(3))));
         Solution solution = new Solution();
-        System.out.println(solution.removeNthFromEnd(head, 3));
+        System.out.println(solution.numComponents(head, new int[]{0,1,3}));
     }
 
     public void swap(int[] nums, int left, int right) {
@@ -208,5 +208,36 @@ public class Solution {
             }
         }
         return result;
+    }
+
+    /**
+     * 给定链表头结点 head，该链表上的每个结点都有一个 唯一的整型值 。同时给定列表 nums，该列表是上述链表中整型值的一个子集。
+     *
+     * 返回列表 nums 中组件的个数，这里对组件的定义为：链表中一段最长连续结点的值（该值必须在列表 nums 中）构成的集合。
+     * @param head
+     * @param nums
+     * @return
+     */
+    public int numComponents(ListNode head, int[] nums) {
+        Map<Integer, Integer> tem  =new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            tem.put(nums[i], i);
+        }
+        int res = 0;
+        int lasti = -2;
+        while (head != null) {
+            int val = head.val;
+            head =  head.next;
+            Integer i = tem.get(val);
+            if (i == null) {
+                lasti = -2;
+                continue;
+            }
+            if (lasti == -2) {
+                res ++;
+            }
+            lasti = i;
+        }
+        return res;
     }
 }
